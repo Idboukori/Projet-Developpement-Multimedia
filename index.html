@@ -11,24 +11,74 @@
         #divs{
             display: none;
         }
+        #capture, #enreg{
+            font-weight: bold;
+        }
+        
+        .Titre{
+           text-align: center; 
+           color: rgb(30, 12, 133);
+           font-weight: bold;
+        }
+        p{
+            display: inline;
+        }
+        .photo{
+            margin-left: 20px;
+        }
+        .header{
+            margin-top: 60px;
+        }
+        .parag{
+            font-weight: bold;
+        }
+        .vid, .cap{
+            margin-top: 50px;
+            border-style: solid;
+           border-color: rgba(26, 7, 124, 0.5);
+        }
+        footer{
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(14, 27, 99, 0.514);
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 <body >
-    <button onclick="watch_video()" class="btn btn-primary">PHOTO</button>
+    <h1  class="Titre">Projet Developpement Multimedia </h1>
+    <div class="container header">
+        <p class="parag">Commencer la capture d'écran : </p>
+        <button onclick="watch_video()" class="btn btn-primary photo">PHOTO</button>
+    </div>
+    
     <div class="container" id="divs">
         <div class="row">
             <div class="col-md-6">
-                <div id="webcam_container">
-                    <video autoplay="true" loop id="MyCam" width="480" height="320"></video>
+                <div  id="webcam_container">
+                    <video class="vid" autoplay="true" loop id="MyCam" width="480" height="320"></video>
                 </div>
             </div>
-            <div class="col-md-6">
-                    <canvas id="canvas" width="480" height="320"></canvas>
-                <button class="btn btn-primary" id="btnCapture">Capture</button>
-                <span class="count" id="countdown">3</span>
+
+            <div class="col-md-6 ">
+                <canvas class="cap" id="canvas" width="480" height="320"></canvas>
+                <br>
+                <button class="btn btn-primary" id="btnCapture"><p id="capture">Capture</p></button>
+                
+                
             </div>
         </div>
     <br>
-        
-    </div></body>
+
+    
+    </div>
+    
+    <footer>
+            <div class="footer-copyright text-center py-3">© Developped By IDBOUKORI Ali GLSID2 </div>
+    </footer>
+</body>
 </html>

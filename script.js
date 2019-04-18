@@ -4,14 +4,14 @@ var btnCapture;
 var imcanvas;
 var captureFlag = false;
 
+
 function watch_video(){
 
     document.getElementById("divs").style.display = "block";
-
+    
     MyCam = document.getElementById("MyCam");
     canvas = document.getElementById("canvas");
     btnCapture = document.getElementById("btnCapture");
-
 
     imcanvas = canvas.getContext("2d");
 
@@ -53,15 +53,22 @@ function ErrorCapture(error){
 }
 
 function capture(){
-    var seconds = document.getElementById("countdown").textContent;
+    
+    var seconds = 4;
     var countdown = setInterval(function() {
         seconds--;
-        document.getElementById("countdown").textContent = seconds;
+        document.getElementById("btnCapture").textContent = seconds;
         if (seconds <= 0){
             clearInterval(countdown);
             captureFlag = true;
+        
     imcanvas.drawImage(MyCam, 0, 0, canvas.width, canvas.height);
+    document.getElementById("btnCapture").textContent="capturer";
         } 
     }, 1000);
     
+    
 }
+
+
+
