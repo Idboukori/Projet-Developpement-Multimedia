@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>TP Dev multimedia</title>
-    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
     <link href="bootstrap.css" rel="stylesheet">
     <script src="script.js"></script>
     <link rel="stylesheet" href="styles.css">
@@ -19,10 +20,13 @@
         #divs{
             display: none;
         }
-        #capture, #convert{
+        #capture, #convert,#download{
             font-weight: bold;
         }
-        
+        #download{
+            text-decoration: none;
+            color: white;
+        }
         .Titre{
            text-align: center; 
            color: rgb(30, 12, 133);
@@ -78,7 +82,8 @@
                 <br>
                 <button class="btn btn-primary" id="btnCapture"><p id="capture">Capture</p></button>
                 <button class="btn btn-primary" id="btnConvert"><p id="convert">Convert to base64</p></button>
-                
+                <button class="btn btn-primary" id="btnDownload"><a href="" download="Image.jpeg" id="download"><i class="fas fa-download"></i></a></button>
+
                 
             </div>
         </div>

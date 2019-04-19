@@ -4,6 +4,7 @@ var btnCapture;
 var imcanvas;
 var captureFlag = false;
 var btnConvert;
+var btnDownload;
 function watch_video(){
     
 
@@ -12,12 +13,13 @@ function watch_video(){
     MyCam = document.getElementById("MyCam");
     canvas = document.getElementById('canvas');
     btnCapture = document.getElementById("btnCapture");
-    btnConvert= document.getElementById("btnConvert")
+    btnConvert= document.getElementById("btnConvert");
+    btnDownload=document.getElementById("btnDownload");
     imcanvas = canvas.getContext("2d");
 
     btnCapture.addEventListener("click",capture);
     btnConvert.addEventListener("click",convert);
-
+    btnDownload.addEventListener("click",download_img);
     navigator.getUserMedia = (
 
         navigator.getUserMedia ||
@@ -62,7 +64,7 @@ function capture(){
         if (seconds <= 0){
             clearInterval(countdown);
             captureFlag = true;
-        
+    
     imcanvas.drawImage(MyCam, 0, 0, canvas.width, canvas.height);
     
     
@@ -82,4 +84,6 @@ function convert(){
     document.getElementById('conv').value = base64;
 }
 
-
+function download_img() {
+  document.getElementById("download").href = canvas.toDataURL("image/jpeg");
+};
