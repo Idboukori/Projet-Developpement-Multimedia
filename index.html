@@ -9,10 +9,13 @@
     <script src="script.js"></script>
     <link rel="stylesheet" href="styles.css">
     <style>
+      
+
        textarea{
            height: 50px;
            background-color: rgba(0, 0, 0, 0.055);
        }
+    
        #conv{
            color:rgb(35, 6, 53);
            font-weight: bold;
@@ -60,6 +63,49 @@
             text-align: center;
         }
         
+
+
+        .canvas {
+        position: relative;
+        width: 50%;
+        }
+
+        .cap {
+        opacity: 1;
+        display: block;
+        width: 100%;
+        height: auto;
+        transition: .5s ease;
+        backface-visibility: hidden;
+        }
+
+        .middle {
+        transition: .5s ease;
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        text-align: center;
+        }
+
+        .canvas:hover .cap {
+        opacity: 0.3;
+        }
+
+        .canvas:hover .middle {
+        opacity: 1;
+        }
+
+        #btnDownload{
+            width: 50px;
+        }
+        
+        
+
+
+       
     </style>
 </head>
 <body >
@@ -77,18 +123,21 @@
                 </div>
             </div>
 
-            <div class="col-md-6 ">
+            <div class="col-md-6 canvas">
                 <canvas class="cap" id='canvas' width="480" height="320"></canvas>
+                <div class="middle">
+                    <button class="btn btn-primary" id="btnDownload"><a href="" download="Image.jpeg" id="download"><i class="fas fa-download"></i></a></button>
+                </div>
                 <br>
+
                 <button class="btn btn-primary" id="btnCapture"><p id="capture">Capture</p></button>
                 <button class="btn btn-primary" id="btnConvert"><p id="convert">Convert to base64</p></button>
-                <button class="btn btn-primary" id="btnDownload"><a href="" download="Image.jpeg" id="download"><i class="fas fa-download"></i></a></button>
-
                 
+
             </div>
         </div>
     <br>
-
+    
     <textarea class="col-md-12" id='conv'></textarea>
 
     </div>

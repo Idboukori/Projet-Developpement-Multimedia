@@ -5,9 +5,12 @@ var imcanvas;
 var captureFlag = false;
 var btnConvert;
 var btnDownload;
+canvas=function(){
+    document.getElementById("canvas").style.opacity=0.5;
+}
 function watch_video(){
     
-
+    
     document.getElementById("divs").style.display = "block";
     document.getElementById("conv").style.display ="none";
     MyCam = document.getElementById("MyCam");
@@ -16,10 +19,11 @@ function watch_video(){
     btnConvert= document.getElementById("btnConvert");
     btnDownload=document.getElementById("btnDownload");
     imcanvas = canvas.getContext("2d");
-
+    
     btnCapture.addEventListener("click",capture);
     btnConvert.addEventListener("click",convert);
     btnDownload.addEventListener("click",download_img);
+   
     navigator.getUserMedia = (
 
         navigator.getUserMedia ||
@@ -39,7 +43,7 @@ function watch_video(){
     MyCam.appendChild(source);
     MyCam.play();
     }
-
+    
 }
 
 function SuccessCapture(stream){
