@@ -8,10 +8,18 @@
     <script src="script.js"></script>
     <link rel="stylesheet" href="styles.css">
     <style>
+       textarea{
+           height: 50px;
+           background-color: rgba(0, 0, 0, 0.055);
+       }
+       #conv{
+           color:rgb(35, 6, 53);
+           font-weight: bold;
+       }
         #divs{
             display: none;
         }
-        #capture, #enreg{
+        #capture, #convert{
             font-weight: bold;
         }
         
@@ -27,13 +35,13 @@
             margin-left: 20px;
         }
         .header{
-            margin-top: 60px;
+            margin-top: 40px;
         }
         .parag{
             font-weight: bold;
         }
         .vid, .cap{
-            margin-top: 50px;
+            margin-top: 40px;
             border-style: solid;
            border-color: rgba(26, 7, 124, 0.5);
         }
@@ -47,6 +55,7 @@
             padding: 10px;
             text-align: center;
         }
+        
     </style>
 </head>
 <body >
@@ -65,16 +74,18 @@
             </div>
 
             <div class="col-md-6 ">
-                <canvas class="cap" id="canvas" width="480" height="320"></canvas>
+                <canvas class="cap" id='canvas' width="480" height="320"></canvas>
                 <br>
                 <button class="btn btn-primary" id="btnCapture"><p id="capture">Capture</p></button>
+                <button class="btn btn-primary" id="btnConvert"><p id="convert">Convert to base64</p></button>
                 
                 
             </div>
         </div>
     <br>
 
-    
+    <textarea class="col-md-12" id='conv'></textarea>
+
     </div>
     
     <footer>
