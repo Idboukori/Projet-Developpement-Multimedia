@@ -109,7 +109,7 @@ function filter(){
     var r = document.querySelectorAll('input[type=range]');
     r.forEach(function(item, index){
         computedFilters += item.getAttribute('data-filter') + '(' + item.value + item.getAttribute('data-scale') + ') ';
-
+        
     });
     
     imcanvas.filter = computedFilters;
