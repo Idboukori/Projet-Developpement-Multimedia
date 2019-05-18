@@ -10,14 +10,21 @@
     <link rel="stylesheet" href="styles.css">
     <style>
       
+        body{
+            /* background-image: url("411888.jpg");
+           background-size: auto; */
+          
+        }
+        button{
+           background-color: goldenrod;
+        }
 
-      
        textarea{
            height: 50px;
            background-color: rgba(0, 0, 0, 0.055);
        }
        #luminance{
-           margin-bottom: 40px;
+           margin-bottom: 10px;
        }
        #conv{
            color:rgb(35, 6, 53);
@@ -26,6 +33,7 @@
         #divs{
             display: none;
         }
+       
         #capture, #convert,#download{
             font-weight: bold;
         }
@@ -35,7 +43,7 @@
         }
         .Titre{
            text-align: center; 
-           color: rgb(30, 12, 133);
+           color: #838aaf;
            font-weight: bold;
         }
         p{
@@ -43,6 +51,11 @@
         }
         .photo{
             margin-left: 20px;
+            background: #838aaf;
+            border-radius: 15px;
+            border: none;
+            color: white;
+            
         }
         .header{
             margin-top: 40px;
@@ -52,8 +65,12 @@
         }
         .vid, .cap{
             margin-top: 40px;
-            border-style: solid;
-           border-color: rgba(26, 7, 124, 0.5);
+            border: none;
+           
+        }
+        .cap{
+            border: solid;
+            border-color: #838aaf;
         }
         .vid{
             width: 100%;
@@ -115,13 +132,17 @@
         .inprange{
             -webkit-appearance: none;
   width: 100%;
-  height: 15px;
+  height: 10px;
   border-radius: 5px;
-  background: #d3d3d3;
+  background: #838aaf;
   outline: none;
   opacity: 0.7;
   -webkit-transition: .2s;
   transition: opacity .2s;
+        }
+
+        .filt{
+            margin-bottom: 50px;
         }
 
         /* .inprange::-webkit-slider-thumb {
@@ -151,11 +172,7 @@ resizable {
 				z-index: 1000;
 			}
  */
-#divs {
-			
-				position: relative;
-				
-			}       
+     
 .resizable {
 				background: none;
 				width: 200px;
@@ -168,15 +185,15 @@ resizable {
 			.resizable .resizers{
 				width: 100%;
 				height: 100%;
-				border: 3px solid #4286f4;
+				border: 3px dashed #838aaf;
 				box-sizing: border-box;
 			}
 			.resizable .resizers .resizer{
-				width: 10px;
-				height: 10px;
+				width: 5px;
+				height: 5px;
 				border-radius: 50%; /*magic to turn square into circle*/
 				background: white;
-				border: 3px solid #4286f4;
+				border: 3px solid rgba(35, 35, 39, 0.486);
 				position: absolute;
 			}
 			.resizable .resizers .resizer.top-left {
@@ -199,6 +216,7 @@ resizable {
 				bottom: -5px;
 				cursor: nwse-resize;
 			}
+            
 
     </style>
 </head>
@@ -206,19 +224,20 @@ resizable {
     
     <h1  class="Titre">Projet Developpement Multimedia </h1>
     <div class="container header">
-        <p class="parag">Commencer la capture d'écran : </p>
-        <button onclick="watch_video()" class="btn btn-primary photo">PHOTO</button>
+        <p class="parag">Commencer la capture : </p>
+        <button onclick="watch_video()" class=" photo">PHOTO</button>
     </div>
     
     <div class="container" id="divs">
-            <div class='resizable'>
+            <div class="resizable crp">
                     <div class='resizers'>
                         <div class='resizer top-left'></div>
                         <div class='resizer top-right'></div>
                         <div class='resizer bottom-left'></div>
                         <div class='resizer bottom-right'></div>
+                        
                     </div>
-                </div>
+            </div>
         <div class="row">
             <div class="col-md-6">
                 <div  id="webcam_container">
@@ -238,7 +257,9 @@ resizable {
             
             
                 <button class="btn btn-primary" id="btnCapture"><p id="capture">Capture</p></button>
-                <button class="btn btn-primary" id="btnConvert"><p id="convert">Convert to base64</p></button><br>
+                <button class="btn btn-primary" id="btnConvert"><p id="convert">Convert to base64</p></button>
+                <button class="btn btn-primary" id="btnCrop" onclick="crop()">crop</button>
+                <br>
                 </div>
             
               
@@ -249,10 +270,14 @@ resizable {
                 <div class="col-md-6">
     
                 </div>
-                 <div class="col-md-6">
+                 <div class="col-md-6 filt">
+                     
+                     <label>brightness</label>
                     <input class="inprange" id="luminance" type="range" min="0" max="200" value="100" step="1" onchange="filter()" data-filter="brightness" data-scale="%">
+                    <label>contrast</label>
                     <input class="inprange" id="contrast" type="range" min="0" max="200" value="100" step="1" onchange="filter()" data-filter="contrast" data-scale="%">
-                 </div>
+                    
+                </div>
              </div>  
         <div class="row">
             <div class="col-md-6">
@@ -271,83 +296,87 @@ resizable {
     </footer>
 
     <script>
+            
             function makeResizableDiv(div) {
-            const element = document.querySelector(div);
-            const resizers = document.querySelectorAll(div + ' .resizer')
-            const minimum_size = 20;
-            let original_width = 0;
-            let original_height = 0;
-            let original_x = 0;
-            let original_y = 0;
-            let original_mouse_x = 0;
-            let original_mouse_y = 0;
-            for (let i = 0;i < resizers.length; i++) {
-                const currentResizer = resizers[i];
-                currentResizer.addEventListener('mousedown', function(e) {
-                    e.preventDefault()
-                    original_width = parseFloat(getComputedStyle(element, null).getPropertyValue('width').replace('px', ''));
-                    original_height = parseFloat(getComputedStyle(element, null).getPropertyValue('height').replace('px', ''));
-                    original_x = element.getBoundingClientRect().left;
-                    original_y = element.getBoundingClientRect().top;
-                    original_mouse_x = e.pageX;
-                    original_mouse_y = e.pageY;
-                    window.addEventListener('mousemove', resize)
-                    window.addEventListener('mouseup', stopResize)
-                })
-                
-                function resize(e) {
-                    if (currentResizer.classList.contains('bottom-right')) {
-                        const width = original_width + (e.pageX - original_mouse_x);
-                        const height = original_height + (e.pageY - original_mouse_y)
-                        if (width > minimum_size) {
-                            element.style.width = width + 'px'
-                        }
-                        if (height > minimum_size) {
-                            element.style.height = height + 'px'
-                        }
-                    }
-                    else if (currentResizer.classList.contains('bottom-left')) {
-                        const height = original_height + (e.pageY - original_mouse_y)
-                        const width = original_width - (e.pageX - original_mouse_x)
-                        if (height > minimum_size) {
-                            element.style.height = height + 'px'
-                        }
-                        if (width > minimum_size) {
-                            element.style.width = width + 'px'
-                            element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
-                        }
-                    }
-                    else if (currentResizer.classList.contains('top-right')) {
-                        const width = original_width + (e.pageX - original_mouse_x)
-                        const height = original_height - (e.pageY - original_mouse_y)
-                        if (width > minimum_size) {
-                            element.style.width = width + 'px'
-                        }
-                        if (height > minimum_size) {
-                            element.style.height = height + 'px'
-                            element.style.top = original_y + (e.pageY - original_mouse_y) + 'px'
-                        }
-                    }
-                    else {
-                        const width = original_width - (e.pageX - original_mouse_x)
-                        const height = original_height - (e.pageY - original_mouse_y)
-                        if (width > minimum_size) {
-                            element.style.width = width + 'px'
-                            element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
-                        }
-                        if (height > minimum_size) {
-                            element.style.height = height + 'px'
-                            element.style.top = original_y + (e.pageY - original_mouse_y) + 'px'
-                        }
-                    }
+    const element = document.querySelector(div);
+    const resizers = document.querySelectorAll(div + ' .resizer')
+    const minimum_size = 20;
+    let original_width = 0;
+    let original_height = 0;
+    let original_x = 0;
+    let original_y = 0;
+    let original_mouse_x = 0;
+    let original_mouse_y = 0;
+    for (let i = 0;i < resizers.length; i++) {
+        const currentResizer = resizers[i];
+        currentResizer.addEventListener('mousedown', function(e) {
+            e.preventDefault()
+            original_width = parseFloat(getComputedStyle(element, null).getPropertyValue('width').replace('px', ''));
+            original_height = parseFloat(getComputedStyle(element, null).getPropertyValue('height').replace('px', ''));
+            original_x = element.getBoundingClientRect().left;
+            original_y = element.getBoundingClientRect().top;
+            original_mouse_x = e.pageX;
+            original_mouse_y = e.pageY;
+            window.addEventListener('mousemove', resize)
+            window.addEventListener('mouseup', stopResize)
+        })
+        
+        function resize(e) {
+            if (currentResizer.classList.contains('bottom-right')) {
+                const width = original_width + (e.pageX - original_mouse_x);
+                const height = original_height + (e.pageY - original_mouse_y)
+                if (width > minimum_size && canvas.getBoundingClientRect().right>element.getBoundingClientRect().left+width) {
+                    element.style.width = width + 'px'
                 }
-                function stopResize() {
-                    window.removeEventListener('mousemove', resize)
+                if (height > minimum_size && canvas.getBoundingClientRect().bottom>element.getBoundingClientRect().top+height) {
+                    element.style.height = height + 'px'
+                }
+                
+                console.log('c',canvas.getBoundingClientRect());
+                console.log(element.getBoundingClientRect());
+            }
+            else if (currentResizer.classList.contains('bottom-left')) {
+                const height = original_height + (e.pageY - original_mouse_y)
+                const width = original_width - (e.pageX - original_mouse_x)
+                if (height > minimum_size && canvas.getBoundingClientRect().bottom>element.getBoundingClientRect().top+height) {
+                    element.style.height = height + 'px'
+                }
+                if (width > minimum_size && canvas.getBoundingClientRect().left<original_x + (e.pageX - original_mouse_x)) {
+                    element.style.width = width + 'px'
+                    element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
+                }
+            }
+            else if (currentResizer.classList.contains('top-right')) {
+                const width = original_width + (e.pageX - original_mouse_x)
+                const height = original_height - (e.pageY - original_mouse_y)
+                if (width > minimum_size && canvas.getBoundingClientRect().right>element.getBoundingClientRect().left+width) {
+                    element.style.width = width + 'px'
+                }
+                if (height > minimum_size && canvas.getBoundingClientRect().top<original_y + (e.pageY - original_mouse_y)) {
+                    element.style.height = height + 'px'
+                    element.style.top = original_y + (e.pageY - original_mouse_y) + 'px'
+                }
+            }
+            else {
+                const width = original_width - (e.pageX - original_mouse_x)
+                const height = original_height - (e.pageY - original_mouse_y)
+                if (width > minimum_size && canvas.getBoundingClientRect().left<original_x + (e.pageX - original_mouse_x)) {
+                    element.style.width = width + 'px'
+                    element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
+                }
+                if (height > minimum_size && canvas.getBoundingClientRect().top<original_y + (e.pageY - original_mouse_y)) {
+                    element.style.height = height + 'px'
+                    element.style.top = original_y + (e.pageY - original_mouse_y) + 'px'
                 }
             }
         }
-        makeResizableDiv('.resizable');
-        
+        function stopResize() {
+            window.removeEventListener('mousemove', resize)
+        }
+    }
+}
+makeResizableDiv('.resizable');
+       
             </script>
 </body>
 </html>
