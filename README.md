@@ -1,5 +1,4 @@
 # Projet-Developpement-Multimedia - CAPTURER IMAGE
-![13](https://user-images.githubusercontent.com/46156538/57969866-b9b30900-797a-11e9-934e-a2da041090f0.PNG)
 
 On clique sur le button photo pour commencer la capture 
 
@@ -30,8 +29,11 @@ On peut ainsi changer luminosité , et contrast du photo capturé :
 ![8](https://user-images.githubusercontent.com/46156538/57969875-bae43600-797a-11e9-8b2d-9c07f86cb0a7.PNG)
 ![9](https://user-images.githubusercontent.com/46156538/57969876-bae43600-797a-11e9-9e8c-bb0f5ab63671.PNG)
 
-Et enfin télecharger la photo , en positionnant le curseur sur la photo et cliquant sur l'icone de téléchargement :
 
 ![10](https://user-images.githubusercontent.com/46156538/57969877-bb7ccc80-797a-11e9-9248-09820e1cb492.PNG)
+
+Et enfin télecharger la photo , en positionnant le curseur sur la photo et cliquant sur l'icone de téléchargement :
+
 ![11](https://user-images.githubusercontent.com/46156538/57969878-bb7ccc80-797a-11e9-9df7-e915b9305729.PNG)
 ![12](https://user-images.githubusercontent.com/46156538/57969879-bb7ccc80-797a-11e9-879d-a42c42b4d283.PNG)
+![13](https://user-images.githubusercontent.com/46156538/57969866-b9b30900-797a-11e9-934e-a2da041090f0.PNG)
